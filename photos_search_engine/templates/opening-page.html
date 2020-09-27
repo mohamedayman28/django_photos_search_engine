@@ -1,0 +1,80 @@
+{% extends "main.html" %}
+
+{% block content %}
+    <!-- Page Content -->
+    <div class="container">
+
+        <!-- Jumbotron Header -->
+        <header class="jumbotron my-4">
+            <h1 class="display-3">Photos Search Engine!</h1>
+            <p class="lead">Powered by <a href="https://www.pexels.com/">Pexels</a> API.</p>
+            <form class="form-inline" action="{% url 'search_results_page' %}" method="POST">
+                {% csrf_token %}
+                <input class="form-control w-100" type="search" name="q" placeholder="Search for free photos" aria-label="Search">
+            </form>
+        </header>
+
+        <!-- Page Content -->
+        <div class="row">
+            <!-- First photos section -->
+            <div class="col-sm-12 m-0 col-md-4 cls-section-1">
+                {% for photo in col_1 %}
+                    <div class="card mb-3">
+
+                        <!-- Download page -->
+                        <a href="{{ photo.url }}" class="cls-download-page" target="blank">
+                            <img class="card-img-top w-100" src="{{ photo.src.large }}">
+                        </a>
+
+                        <!-- URL to author page -->
+                        <div class="card-body p-2">
+                            <p class="card-text cls-img-author">
+                                Author: <a href="{{ photo.photographer_url }}" target="blank">{{ photo.photographer }}</a>
+                            </p>
+                        </div>
+
+                    </div>
+                {% endfor %}
+            </div>
+            <!-- Second photos section -->
+            <div class="col-sm-12 m-0 col-md-4 cls-section-1">
+                {% for photo in col_2 %}
+                    <div class="card mb-3">
+                        <!-- URL to image download page -->
+                        <a href="{{ photo.url }}" class="cls-download-page" target="blank">
+                            <!-- image size is medium -->
+                            <img class="card-img-top w-100" src="{{ photo.src.large }}">
+                        </a>
+                        <div class="card-body p-2">
+                            <!-- URL to author page -->
+                            <p class="card-text cls-img-author">
+                                Author: <a href="{{ photo.photographer_url }}" target="blank">{{ photo.photographer }}</a>
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <!-- Third photos section -->
+            <div class="col-sm-12 m-0 col-md-4 cls-section-1">
+                {% for photo in col_3 %}
+                    <div class="card mb-3">
+                        <!-- URL to image download page -->
+                        <a href="{{ photo.url }}" class="cls-download-page" target="blank">
+                            <!-- image size is medium -->
+                            <img class="card-img-top w-100" src="{{ photo.src.large }}">
+                        </a>
+                        <div class="card-body p-2">
+                            <!-- URL to author page -->
+                            <p class="card-text cls-img-author">
+                                Author: <a href="{{ photo.photographer_url }}" target="blank">{{ photo.photographer }}</a>
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+        <!-- ./row -->
+    </div>
+    <!-- ./container -->
+{% endblock content %}

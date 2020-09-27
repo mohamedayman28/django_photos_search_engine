@@ -1,0 +1,7 @@
+/* 
+    cls used to distinguish between bootstrap and redefined class names
+*/
+
+.cls-download-page .card-img-top:hover {
+    opacity: 0.8 !important;
+}
