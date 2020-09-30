@@ -1,0 +1,87 @@
+{% extends "main.html" %}
+
+{% block content %}
+    <!-- Page Content -->
+    <div class="container">
+
+        <!-- Header -->
+        <header class="jumbotron my-4">
+            <h1 class="display-3">Photos Search Engine!</h1>
+            <p class="lead">Powered by <a href="https://www.pexels.com/">Pexels</a> API.</p>
+            <!-- Search form -->
+            <form class="form-inline" action="{% url 'search_results_page' %}" method="POST">
+                {% csrf_token %}
+                <input class="form-control w-100" type="search"
+                    name="k" placeholder="Search for free photos"
+                    aria-label="Search" required autofocus>
+            </form>
+        </header>
+
+        <!-- Search results content -->
+        <div class="row">
+            {% if total_results == 0 %}
+                <h1>Your keyword: <b>{{ keyword }}</b>, has no results type another word.</h1>
+            {% else %}
+                <!-- First photos section -->
+                <div class="col-sm-12 m-0 col-md-4 cls-section-1">
+                    <!-- Looping over first column results -->
+                    {% for photo in col_1 %}
+
+                        <div class="card mb-3">
+
+                            <!-- Photo download page -->
+                            <a href="{{ photo.url }}" class="cls-download-page" target="blank">
+                                <img class="card-img-top w-100" src="{{ photo.src.large }}">
+                            </a>
+
+                            <!-- URL to the author page -->
+                            <div class="card-body p-2">
+                                <p class="card-text cls-img-author">
+                                    Author: <a href="{{ photo.photographer_url }}" target="blank">{{ photo.photographer }}</a>
+                                </p>
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+                </div>
+                <!-- Second photos section -->
+                <div class="col-sm-12 m-0 col-md-4 cls-section-1">
+                    <!-- Looping over second column results -->
+                    {% for photo in col_2 %}
+                        <div class="card mb-3">
+                            <a href="{{ photo.url }}" class="cls-download-page" target="blank">
+                                <img class="card-img-top w-100" src="{{ photo.src.large }}">
+                            </a>
+                            <div class="card-body p-2">
+                                <p class="card-text cls-img-author">
+                                    Author: <a href="{{ photo.photographer_url }}" target="blank">{{ photo.photographer }}</a>
+                                </p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <!-- Third photos section -->
+                <div class="col-sm-12 m-0 col-md-4 cls-section-1">
+                    <!-- Looping over thirs column results -->
+                    {% for photo in col_3 %}
+                        <div class="card mb-3">
+                            <a href="{{ photo.url }}" class="cls-download-page" target="blank">
+                                <img class="card-img-top w-100" src="{{ photo.src.large }}">
+                            </a>
+                            <div class="card-body p-2">
+                                <p class="card-text cls-img-author">
+                                    Author: <a href="{{ photo.photographer_url }}" target="blank">{{ photo.photographer }}</a>
+                                </p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+        </div>
+        <!-- ./row -->
+
+    </div>
+    <!-- ./container -->
+{% endblock content %}

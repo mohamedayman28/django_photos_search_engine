@@ -1,37 +1,55 @@
 from django.contrib.staticfiles import finders
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 
 from pexels_api import API
 
 
 # Get file path.
-result = finders.find('text_files/pexels_api_key.txt')
-f = open(result, 'r')
+file = finders.find('text_files/pexels_api_key.txt')
+f = open(file, 'r')
 PEXELS_API_KEY = f.read()
 # Create API object
 api = API(PEXELS_API_KEY)
 
 
-def index_page(request):
-    """Get popular images on Pexels when user in Home page."""
-    # API full response object.
-    response_object = api.popular(results_per_page=15, page=1)
+def search_results_page(request):
+    """Show popular or search results
 
-    # List of dictionary photos object.
+    Show photos when the user type keyword show related results,
+    and when user visiting Home page show popular Pexels photos.
+    """
+
+    if request.method == 'POST':
+        # When user submit keyword within the search input.
+        keyword = request.POST.get('k')
+    # On opening page, assign keyword with string to avoid error
+    # within next if condition.
+    else:
+        keyword = ''
+
+    # On empty keyword, or visiting Home page.
+    if keyword.replace(' ', '') == '' or request.method == 'GET':
+        response_object = api.popular(results_per_page=78)
+    else:
+        # On search keyword
+        response_object = api.search(keyword, results_per_page=78)
+
+    # Get list of photos dictionary object.
     photos_object = response_object.get('photos')
 
-    # Divide the results by 3, so that, contribute between HTML grid
-    # rows equally, depends on the popular(results_per_page) argument
-    # integer.
+    # Divide the results by 3, so that, contribute the 78 items
+    # between HTML grid rows equally, depends on the
+    # popular(results_per_page) argument value(integer).
+    # Each column corresponding to column of mites within the HTML.
     col_1 = []
     col_2 = []
     col_3 = []
     for count, item in enumerate(photos_object):
-        # Append 5 items. Indexing starts from Zero.
-        if count <= 4:
+        # Append 9 items. Indexing starts from Zero.
+        if count <= 25:
             col_1.append(item)
-        # Append 6 items.
-        elif count > 4 and count <= 10:
+        # Append 10 items.
+        elif count > 25 and count <= 51:
             col_2.append(item)
         # Append the rest items.
         else:
@@ -41,34 +59,8 @@ def index_page(request):
         'col_1': col_1,
         'col_2': col_2,
         'col_3': col_3,
+        # These two keys, used when there is unmatched results.
+        'total_results': response_object.get('total_results'),
+        'keyword': keyword,
     }
-    return render(request, 'opening-page.html', context)
-
-
-def search_results_page(request):
-    """Show photos on search query."""
-    query = request.POST.get('q')
-    if query == '':
-        response_object = api.popular(results_per_page=30, page=1)
-    else:
-        response_object = api.search(query, results_per_page=30, page=1)
-
-    photos_object = response_object.get('photos')
-
-    col_1 = []
-    col_2 = []
-    col_3 = []
-    for count, item in enumerate(photos_object):
-        if count <= 9:
-            col_1.append(item)
-        elif count > 9 and count <= 19:
-            col_2.append(item)
-        else:
-            col_3.append(item)
-
-    context = {
-        'col_1': col_1,
-        'col_2': col_2,
-        'col_3': col_3,
-    }
-    return render(request, 'opening-page.html', context)
+    return render(request, 'photos-results.html', context)
