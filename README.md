@@ -6,7 +6,7 @@ This project is a tool that allows users to type the desired keyword and search 
 Before you begin, ensure you have virtualenv, it's not mandatory though, but it's a good thumb up.
 
 ## Installation
-After activating your virtualenv, install requirements.txt file:
+After activating your virtualenv, install [requirements.txt](https://github.com/mohamedayman28/photos-search-engine/blob/master/requirements.txt) file:
 ```
 pip install -r requirements.txt
 ```
