@@ -2,6 +2,8 @@
 
 This project is a tool that allows users to type the desired keyword and search thousands of photos using Pexels API endpoints.
 
+![Image of Yaktocat](https://i.imgur.com/Wi7FWQk.gif)
+
 ## Prerequisites
 Before you begin, ensure you have virtualenv, it's not mandatory though, but it's a good thumb up.
 
