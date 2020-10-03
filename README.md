@@ -1,4 +1,4 @@
-# Photos Search Engine with Django3.1
+# Photos Search Engine with Django and Pexels API
 
 This project is a tool that allows users to type the desired keyword and search thousands of photos using Pexels API endpoints.
 
