@@ -2,6 +2,8 @@
 
 This project is a tool that allows users to type the desired keyword and search thousands of photos using Pexels API endpoints.
 
+**Tech Stack**: Django3.1, Bootstrap, Pexels API.
+
 ![Image of Yaktocat](https://i.imgur.com/Wi7FWQk.gif)
 
 ## Prerequisites
